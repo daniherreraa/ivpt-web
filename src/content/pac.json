@@ -1,0 +1,17 @@
+{
+  "title": "PAC",
+  "description": "Programa de Acompañamiento Comunitario. Uniendo esfuerzos para llevar un mensaje de esperanza y servicio.",
+  "ctaLink": "https://forms.gle/mockformpac",
+  "ctaLabel": "Saber Más",
+  "whatIsTitle": "¿Que es el PAC?",
+  "whatIsContent": "Es una labor misionera que combina servicio, formación y propósito. A través de la distribución de literatura, los colportores llevan un mensaje de esperanza, valores y fe, impactando lives de manera directa y personal.",
+  "whereTitle": "¿Donde estamos?",
+  "whereContent": "Actualmente desarrollamos esta labor en Bogotá, trabajando en diferentes zonas de la ciudad y formando personas comprometidas con servir y marcar la diferencia desde su entorno.",
+  "howTitle": "¿Como puedo ser parte?",
+  "howContent": "Ser colportor es dar un paso de compromiso y vocación. Puedes ser parte registrándote, recibiendo orientación y sumándote a un proceso de formación que te preparará para servir con propósito y claridad.",
+  "gallery": [
+    "/images/pac/slide-1.jpg",
+    "/images/pac/slide-2.jpg",
+    "/images/pac/slide-3.jpg"
+  ]
+}

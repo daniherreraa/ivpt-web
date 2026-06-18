@@ -1,0 +1,140 @@
+---
+// Videos.astro
+interface Props {
+  videos: any[];
+}
+const { videos } = Astro.props;
+
+function getYoutubeEmbedUrl(url: string) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  const videoId = (match && match[2].length === 11) ? match[2] : null;
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+}
+
+// Replicate videos to ensure seamless looping in the marquee
+let displayVideos = [...videos];
+while (displayVideos.length < 8 && videos.length > 0) {
+  displayVideos = [...displayVideos, ...videos];
+}
+const finalVideos = [...displayVideos, ...displayVideos];
+---
+<section id="videos" class="py-24 bg-brand-light/20 border-t border-brand-accent/50 overflow-hidden">
+  <div class="max-w-[1400px] mx-auto px-6 mb-12">
+    <div class="text-center">
+      <span class="text-brand font-bold text-xs uppercase tracking-widest mb-3 block">Testimonios y Mensajes</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-neutral-dark tracking-tight leading-none mb-4">
+        Nuestros Videos
+      </h2>
+      <p class="text-neutral-muted text-sm md:text-base max-w-[65ch] mx-auto">
+        Conoce más de cerca las experiencias de nuestra comunidad y las conferencias destacadas.
+      </p>
+    </div>
+  </div>
+
+  <!-- Infinite Marquee/Carousel Container -->
+  <div class="marquee-container py-4 relative w-full overflow-hidden">
+    <div class="marquee-content flex gap-8">
+      {finalVideos.map((video, idx) => {
+        const embedUrl = getYoutubeEmbedUrl(video.entry.youtubeUrl);
+        return (
+          <div class="w-[280px] md:w-[360px] shrink-0 bg-white border border-brand-accent/70 shadow-md rounded-2xl overflow-hidden transition-spring hover-lift-rotate select-none">
+            <div class="relative aspect-video group cursor-pointer video-card-trigger" data-embed={embedUrl} data-title={video.entry.title}>
+              <img 
+                src={video.entry.thumbnail} 
+                alt={video.entry.title} 
+                class="w-full h-full object-cover transition-spring duration-700 group-hover:scale-105"
+                draggable="false"
+              />
+              <div class="absolute inset-0 bg-neutral-dark/30 group-hover:bg-neutral-dark/40 transition-colors flex items-center justify-center">
+                <!-- Play button with spring motion -->
+                <div class="w-14 h-14 rounded-full bg-white text-brand shadow-lg flex items-center justify-center transition-spring group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6 ml-1">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="text-sm md:text-base font-bold text-neutral-dark leading-snug line-clamp-1">{video.entry.title}</h3>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <dialog id="video-modal" class="bg-transparent backdrop:bg-neutral-dark/80 p-0 border-0 rounded-2xl max-w-4xl w-[90%] aspect-video overflow-hidden">
+    <div class="relative w-full h-full bg-black">
+      <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <button id="close-modal-btn" class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .marquee-container {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    /* Create faded edges at the border limits for premium visual depth */
+    mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
+  }
+  .marquee-content {
+    display: flex;
+    gap: 2rem;
+    animation: scrollMarquee 35s linear infinite;
+  }
+  .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+  @keyframes scrollMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('video-modal') as HTMLDialogElement;
+  const iframe = document.getElementById('video-iframe') as HTMLIFrameElement;
+  const triggers = document.querySelectorAll('.video-card-trigger');
+  const closeBtn = document.getElementById('close-modal-btn');
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', (e: any) => {
+      const card = e.currentTarget;
+      const embedUrl = card.dataset.embed;
+      if (embedUrl && iframe && modal) {
+        iframe.src = `${embedUrl}?autoplay=1`;
+        modal.showModal();
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    if (modal) {
+      modal.close();
+      if (iframe) iframe.src = ""; // Stop playback
+    }
+  });
+
+  modal?.addEventListener('click', (e) => {
+    const rect = modal.getBoundingClientRect();
+    const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+    if (!isInDialog) {
+      modal.close();
+      if (iframe) iframe.src = ""; // Stop playback
+    }
+  });
+</script>

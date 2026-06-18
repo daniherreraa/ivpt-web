@@ -1,0 +1,107 @@
+---
+// Cepev.astro
+interface Props {
+  cepev: any;
+}
+const { cepev } = Astro.props;
+---
+<section id="cepev" class="py-24 bg-brand-light/30 border-y border-brand-accent/50 overflow-visible">
+  <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    
+    <!-- Left Column: Info -->
+    <div class="lg:col-span-6 flex flex-col items-start">
+      <span class="text-brand font-bold text-xs uppercase tracking-widest mb-3">Formación de Vida</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-neutral-dark tracking-tight leading-tight mb-6">
+        {cepev.title}
+      </h2>
+      <p class="text-neutral-muted text-sm md:text-base leading-relaxed mb-8 max-w-[55ch]">
+        {cepev.description}
+      </p>
+      <a 
+        href={cepev.ctaLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-brand text-white px-8 py-3.5 rounded-lg hover:bg-brand-hover transition-spring hover-lift-rotate text-xs uppercase tracking-wider font-semibold"
+      >
+        {cepev.ctaLabel}
+      </a>
+    </div>
+
+    <!-- Right Column: Interactive Rotations -->
+    <div class="lg:col-span-6 relative mt-6 lg:mt-0">
+      <!-- Asymmetric card layout for rotations with variance 8 -->
+      <div class="bg-white border border-brand-accent/70 p-8 md:p-10 rounded-3xl shadow-xl transition-spring relative z-10">
+        <!-- Tab navigation -->
+        <div class="flex flex-wrap gap-2 mb-8 border-b border-brand-accent/30 pb-4">
+          {cepev.rotations.map((item: any, idx: number) => (
+            <button 
+              class={`cepev-tab-btn px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-spring ${idx === 0 ? 'bg-brand text-white' : 'bg-brand-light text-brand hover:bg-brand/10'}`}
+              data-index={idx}
+            >
+              {item.type === 'versiculo' ? 'Versículo' : item.type === 'frase' ? 'Frase' : item.type === 'grito' ? 'Grito' : 'Inmersión'}
+            </button>
+          ))}
+        </div>
+
+        <!-- Content blocks -->
+        <div class="relative min-h-[160px] flex flex-col justify-between">
+          {cepev.rotations.map((item: any, idx: number) => (
+            <div 
+              class={`cepev-rotation-block transition-all duration-500 flex flex-col justify-between ${idx === 0 ? 'block opacity-100 scale-100' : 'hidden opacity-0 scale-95'}`}
+              data-index={idx}
+            >
+              <blockquote class="text-lg md:text-xl font-semibold italic text-brand leading-relaxed mb-6">
+                "{item.content}"
+              </blockquote>
+              {item.author && (
+                <cite class="text-xs font-bold text-neutral-muted uppercase tracking-wider not-italic block mt-2">
+                  - {item.author}
+                </cite>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Accent geometric element behind the card for artsy variance 8 -->
+      <div class="absolute inset-0 bg-brand/10 rounded-3xl -translate-x-3 translate-y-3 z-0"></div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.cepev-tab-btn');
+  const blocks = document.querySelectorAll('.cepev-rotation-block');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e: any) => {
+      const targetIdx = parseInt(e.target.dataset.index);
+
+      // Update tabs classes
+      tabs.forEach((t, idx) => {
+        if (idx === targetIdx) {
+          t.classList.remove('bg-brand-light', 'text-brand');
+          t.classList.add('bg-brand', 'text-white');
+        } else {
+          t.classList.remove('bg-brand', 'text-white');
+          t.classList.add('bg-brand-light', 'text-brand');
+        }
+      });
+
+      // Update blocks classes
+      blocks.forEach((block: any, idx) => {
+        if (idx === targetIdx) {
+          block.classList.remove('hidden');
+          setTimeout(() => {
+            block.classList.remove('opacity-0', 'scale-95');
+            block.classList.add('opacity-100', 'scale-100');
+          }, 50);
+        } else {
+          block.classList.add('hidden', 'opacity-0', 'scale-95');
+          block.classList.remove('opacity-100', 'scale-100');
+        }
+      });
+    });
+  });
+</script>

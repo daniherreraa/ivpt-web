@@ -1,0 +1,116 @@
+---
+// Footer.astro
+interface Props {
+  footer: any;
+}
+const { footer } = Astro.props;
+---
+<footer id="contacto" class="bg-white border-t border-brand-accent/60 pt-20 pb-12 overflow-visible">
+  <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-brand-accent/30">
+    
+    <!-- Branding -->
+    <div class="md:col-span-4 flex flex-col items-start gap-4">
+      <div class="flex items-center gap-3">
+        <img src="/images/tree_logo.png" alt="IVPT Logo" class="h-14 w-auto object-contain" />
+        <div class="flex flex-col">
+          <span class="text-brand font-bold text-xl tracking-tight leading-none">IVPT</span>
+          <span class="text-neutral-muted text-[10px] tracking-wider uppercase font-semibold">Instituto Árbol de Vida</span>
+        </div>
+      </div>
+      <p class="text-neutral-muted text-xs leading-relaxed max-w-[35ch] mt-2">
+        Comprometidos con el desarrollo humano integral, la formación espiritual y el acompañamiento de nuestra comunidad.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="md:col-span-3 flex flex-col gap-4">
+      <h4 class="text-brand font-bold text-sm uppercase tracking-wider">Enlaces Rápidos</h4>
+      <nav class="flex flex-col gap-2.5 text-xs font-semibold text-neutral-muted">
+        <a href="#eventos" class="hover:text-brand transition-colors">Eventos</a>
+        <a href="#cepev" class="hover:text-brand transition-colors">CEPEV</a>
+        <a href="#pac" class="hover:text-brand transition-colors">PAC</a>
+        <a href="#videos" class="hover:text-brand transition-colors font-semibold">Videos</a>
+      </nav>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="md:col-span-5 flex flex-col gap-4">
+      <h4 class="text-brand font-bold text-sm uppercase tracking-wider">Contacto</h4>
+      <div class="flex flex-col gap-3 text-xs text-neutral-muted font-medium">
+        <div class="flex items-start gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="flex flex-col">
+            <strong class="text-neutral-dark">Dirección:</strong>
+            <span>{footer.address}</span>
+          </span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+          <span class="flex flex-col">
+            <strong class="text-neutral-dark">Localidades:</strong>
+            <span>{footer.localidades}</span>
+          </span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span class="flex flex-col">
+            <strong class="text-neutral-dark">Puedo orar por ti:</strong>
+            <a href={`tel:${footer.phoneOrar}`} class="hover:text-brand transition-colors">{footer.phoneOrar}</a>
+          </span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <div class="flex flex-col">
+            <span class="flex gap-1">
+              <strong class="text-neutral-dark">CEPEV:</strong>
+              <a href={`mailto:${footer.emailCepev}`} class="hover:text-brand transition-colors">{footer.emailCepev}</a>
+            </span>
+            <span class="flex gap-1 mt-0.5">
+              <strong class="text-neutral-dark">PAC:</strong>
+              <a href={`mailto:${footer.emailPac}`} class="hover:text-brand transition-colors">{footer.emailPac}</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="flex gap-4 mt-2">
+        {footer.facebookUrl && (
+          <a href={footer.facebookUrl} target="_blank" rel="noopener noreferrer" class="text-neutral-muted hover:text-brand transition-colors" aria-label="Facebook">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/>
+            </svg>
+          </a>
+        )}
+        {footer.instagramUrl && (
+          <a href={footer.instagramUrl} target="_blank" rel="noopener noreferrer" class="text-neutral-muted hover:text-brand transition-colors" aria-label="Instagram">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+        )}
+        {footer.youtubeUrl && (
+          <a href={footer.youtubeUrl} target="_blank" rel="noopener noreferrer" class="text-neutral-muted hover:text-brand transition-colors" aria-label="YouTube">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.507a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.871.507 9.388.507 9.388.507s7.517 0 9.388-.507a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="max-w-[1400px] mx-auto px-6 pt-8 text-center text-[10px] md:text-xs text-neutral-muted uppercase tracking-wider font-semibold">
+    <p>&copy; {new Date().getFullYear()} IVPT - Instituto Árbol de Vida. Todos los derechos reservados.</p>
+  </div>
+</footer>

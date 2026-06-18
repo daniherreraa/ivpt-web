@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --color-brand: #1E4B7A;
+  --color-brand-hover: #153658;
+  --color-brand-light: #F0F4F8;
+  --color-brand-accent: #E2E8F0;
+  --color-neutral-dark: #0F172A;
+  --color-neutral-light: #F8FAFC;
+  --color-neutral-muted: #475569;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-neutral-light);
+  color: var(--color-neutral-dark);
+  overflow-x: hidden;
+}
+
+/* Custom layout classes for DESIGN_VARIANCE: 8 (asymmetric structures) */
+.asymmetric-clip-right {
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.asymmetric-clip-left {
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.organic-border {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.organic-border-alt {
+  border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%;
+}
+
+/* Smooth motion for MOTION_INTENSITY: 5 */
+.transition-spring {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-lift-rotate:hover {
+  transform: translateY(-8px) rotate(1deg);
+}
+
+.hover-lift-rotate-alt:hover {
+  transform: translateY(-8px) rotate(-1.3deg);
+}

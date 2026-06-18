@@ -1,0 +1,164 @@
+---
+// Pac.astro
+interface Props {
+  pac: any;
+}
+const { pac } = Astro.props;
+---
+<section id="pac" class="py-24 px-6 max-w-[1400px] mx-auto overflow-visible">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    
+    <!-- Left Column: Asymmetric Image Gallery Slider -->
+    <div class="lg:col-span-5 relative h-[350px] md:h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-brand-accent/50 rotate-[-1deg] transition-spring hover:rotate-0">
+      <div class="absolute inset-0">
+        {pac.gallery.map((imgUrl: string, idx: number) => (
+          <div 
+            class={`pac-slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            data-index={idx}
+          >
+            <img 
+              src={imgUrl} 
+              alt={`PAC Imagen ${idx + 1}`} 
+              class="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+      <div class="absolute inset-0 bg-brand/10 mix-blend-overlay z-20 pointer-events-none"></div>
+      
+      <!-- Slide controls -->
+      <div class="absolute bottom-6 left-6 z-30 flex gap-2">
+        {pac.gallery.map((_: any, idx: number) => (
+          <button 
+            class={`pac-dot w-2.5 h-2.5 rounded-full border border-white transition-all ${idx === 0 ? 'bg-white scale-125' : 'bg-transparent'}`}
+            data-index={idx}
+            aria-label={`Ir a imagen ${idx + 1}`}
+          ></button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right Column: Informational Cards Stack (¿Qué es?, ¿Dónde estamos?, ¿Cómo ser parte?) -->
+    <div class="lg:col-span-7 flex flex-col gap-6 lg:-ml-6 relative z-20 mt-6 lg:mt-0">
+      <!-- Title -->
+      <div class="mb-2">
+        <span class="text-brand font-bold text-xs uppercase tracking-widest mb-3 block">Acompañamiento</span>
+        <h2 class="text-3xl md:text-5xl font-extrabold text-neutral-dark tracking-tight leading-none mb-4">
+          {pac.title}
+        </h2>
+        <p class="text-neutral-muted text-sm md:text-base leading-relaxed max-w-[50ch] mb-4">
+          {pac.description}
+        </p>
+      </div>
+
+      <!-- Cards Stack with dynamic offsets for variance 8 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1: ¿Qué es? -->
+        <div class="bg-white border border-brand-accent/70 p-6 rounded-2xl shadow-lg rotate-[0.5deg] hover:rotate-0 transition-spring flex flex-col justify-between">
+          <div>
+            <h3 class="text-base md:text-lg font-bold text-brand mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand"></span>
+              {pac.whatIsTitle}
+            </h3>
+            <p class="text-neutral-muted text-xs leading-relaxed">
+              {pac.whatIsContent}
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: ¿Dónde estamos? -->
+        <div class="bg-brand-light/80 border border-brand/10 p-6 rounded-2xl shadow-lg rotate-[-1deg] hover:rotate-0 transition-spring flex flex-col justify-between md:translate-y-3">
+          <div>
+            <h3 class="text-base md:text-lg font-bold text-brand mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand"></span>
+              {pac.whereTitle}
+            </h3>
+            <p class="text-neutral-muted text-xs leading-relaxed">
+              {pac.whereContent}
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3: ¿Cómo ser parte? -->
+        <div class="bg-white border border-brand-accent/70 p-6 rounded-2xl shadow-lg rotate-[1.2deg] hover:rotate-0 transition-spring flex flex-col justify-between md:-translate-y-2">
+          <div>
+            <h3 class="text-base md:text-lg font-bold text-brand mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand"></span>
+              {pac.howTitle}
+            </h3>
+            <p class="text-neutral-muted text-xs leading-relaxed">
+              {pac.howContent}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-4">
+        <a 
+          href={pac.ctaLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-brand text-white px-8 py-3.5 rounded-lg hover:bg-brand-hover transition-spring hover-lift-rotate text-xs uppercase tracking-wider font-semibold"
+        >
+          {pac.ctaLabel}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.pac-slide');
+  const dots = document.querySelectorAll('.pac-dot');
+  let currentIdx = 0;
+  const intervalTime = 5000;
+  let intervalId: any;
+
+  function showSlide(index: number) {
+    slides.forEach((slide, idx) => {
+      if (idx === index) {
+        slide.classList.remove('opacity-0', 'z-0');
+        slide.classList.add('opacity-100', 'z-10');
+      } else {
+        slide.classList.remove('opacity-100', 'z-10');
+        slide.classList.add('opacity-0', 'z-0');
+      }
+    });
+
+    dots.forEach((dot, idx) => {
+      if (idx === index) {
+        dot.classList.add('bg-white', 'scale-125');
+      } else {
+        dot.classList.remove('bg-white', 'scale-125');
+      }
+    });
+
+    currentIdx = index;
+  }
+
+  function nextSlide() {
+    let next = (currentIdx + 1) % slides.length;
+    showSlide(next);
+  }
+
+  function startAutoplay() {
+    intervalId = setInterval(nextSlide, intervalTime);
+  }
+
+  function resetAutoplay() {
+    clearInterval(intervalId);
+    startAutoplay();
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e: any) => {
+      const idx = parseInt(e.target.dataset.index);
+      showSlide(idx);
+      resetAutoplay();
+    });
+  });
+
+  startAutoplay();
+</script>

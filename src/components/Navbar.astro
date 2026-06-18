@@ -1,0 +1,69 @@
+---
+// Navbar.astro
+---
+<header class="w-full h-16 md:h-20 bg-white border-b border-brand-accent/50 sticky top-0 z-50 transition-all">
+  <div class="max-w-[1400px] h-full mx-auto px-6 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 group">
+      <img src="/images/tree_logo.png" alt="IVPT Logo" class="h-10 md:h-12 w-auto object-contain transition-spring group-hover:scale-105" />
+      <div class="flex flex-col">
+        <span class="text-brand font-bold text-base md:text-lg tracking-tight leading-none">IVPT</span>
+        <span class="text-neutral-muted text-[10px] md:text-xs tracking-wider uppercase font-semibold">Árbol de Vida</span>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+      <a href="#eventos" class="text-neutral-dark hover:text-brand transition-colors">Eventos</a>
+      <a href="#cepev" class="text-neutral-dark hover:text-brand transition-colors">CEPEV</a>
+      <a href="#pac" class="text-neutral-dark hover:text-brand transition-colors">PAC</a>
+      <a href="#videos" class="text-neutral-dark hover:text-brand transition-colors font-semibold">Videos</a>
+      <a href="#contacto" class="bg-brand text-white px-5 py-2 rounded-lg hover:bg-brand-hover transition-spring hover-lift-rotate text-xs uppercase tracking-wider font-semibold">Contacto</a>
+    </nav>
+
+    <button id="mobile-menu-btn" class="md:hidden text-neutral-dark p-2" aria-label="Abrir menú">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer" class="fixed inset-0 bg-neutral-dark/40 backdrop-blur-sm z-40 hidden md:hidden">
+    <div class="absolute right-0 top-0 bottom-0 w-64 bg-white p-6 shadow-xl flex flex-col gap-6">
+      <div class="flex items-center justify-between border-b border-brand-accent pb-4">
+        <span class="text-brand font-bold">Menú</span>
+        <button id="mobile-drawer-close" class="text-neutral-dark p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-4 text-base font-semibold">
+        <a href="#eventos" class="text-neutral-dark hover:text-brand py-2 block">Eventos</a>
+        <a href="#cepev" class="text-neutral-dark hover:text-brand py-2 block">CEPEV</a>
+        <a href="#pac" class="text-neutral-dark hover:text-brand py-2 block">PAC</a>
+        <a href="#videos" class="text-neutral-dark hover:text-brand py-2 block">Videos</a>
+        <a href="#contacto" class="bg-brand text-white text-center py-3 rounded-lg hover:bg-brand-hover transition-spring block mt-4">Contacto</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const closeBtn = document.getElementById('mobile-drawer-close');
+  const drawer = document.getElementById('mobile-drawer');
+
+  btn?.addEventListener('click', () => {
+    drawer?.classList.remove('hidden');
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    drawer?.classList.add('hidden');
+  });
+
+  drawer?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      drawer?.classList.add('hidden');
+    });
+  });
+</script>

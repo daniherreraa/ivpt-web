@@ -1,0 +1,74 @@
+---
+// Events.astro
+interface Props {
+  events: any[];
+}
+const { events } = Astro.props;
+---
+<section id="eventos" class="py-24 px-6 max-w-[1400px] mx-auto overflow-visible">
+  <div class="mb-16">
+    <h2 class="text-3xl md:text-5xl font-extrabold text-neutral-dark tracking-tight leading-none mb-4">
+      Otros Eventos
+    </h2>
+    <p class="text-neutral-muted text-sm md:text-base max-w-[65ch]">
+      Participa en nuestras actividades complementarias, retiros y talleres prácticos diseñados para toda la comunidad.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 pb-12">
+    {events.map((event, idx) => {
+      // Asymmetric layout logic for DESIGN_VARIANCE: 8
+      let rotationClass = "rotate-[1deg] hover:rotate-0";
+      let offsetClass = "md:translate-y-4";
+      
+      if (idx % 3 === 0) {
+        rotationClass = "rotate-[-1.2deg] hover:rotate-0";
+        offsetClass = "md:-translate-y-4";
+      } else if (idx % 3 === 1) {
+        rotationClass = "rotate-[1.5deg] hover:rotate-0";
+        offsetClass = "md:translate-y-8";
+      }
+
+      return (
+        <div class={`bg-white border border-brand-accent/70 shadow-lg rounded-2xl overflow-hidden transition-spring hover-lift-rotate flex flex-col ${rotationClass} ${offsetClass}`}>
+          <div class="relative h-48 overflow-hidden bg-brand-light">
+            <img 
+              src={event.entry.image} 
+              alt={event.entry.title} 
+              class="w-full h-full object-cover transition-spring duration-700 hover:scale-105"
+            />
+            <div class="absolute top-4 left-4 bg-brand text-white text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full shadow-md">
+              {event.entry.date}
+            </div>
+          </div>
+          
+          <div class="p-6 flex-grow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-1.5 text-xs text-neutral-muted mb-2 font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>{event.entry.location}</span>
+              </div>
+              <h3 class="text-lg md:text-xl font-bold text-neutral-dark mb-4 leading-snug">
+                {event.entry.title}
+              </h3>
+            </div>
+            
+            <div class="mt-4">
+              <a 
+                href={event.entry.ctaLink} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-block w-full text-center bg-brand-light text-brand px-4 py-2.5 rounded-lg border border-brand/20 hover:bg-brand hover:text-white transition-spring font-semibold text-xs uppercase tracking-wider"
+              >
+                {event.entry.ctaLabel}
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>

@@ -1,0 +1,98 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Events from '../components/Events.astro';
+import Cepev from '../components/Cepev.astro';
+import Pac from '../components/Pac.astro';
+import Videos from '../components/Videos.astro';
+import Footer from '../components/Footer.astro';
+
+import '../styles/global.css';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+const slides = await reader.collections.heroSlides.all();
+const events = await reader.collections.events.all();
+const videos = await reader.collections.videos.all();
+const cepev = await reader.singletons.cepev.read();
+const pac = await reader.singletons.pac.read();
+const footer = await reader.singletons.footer.read();
+
+// Fallback logic to prevent errors if content files are empty or missing
+const safeSlides = slides.length > 0 ? slides : [
+  {
+    entry: {
+      title: "Conferencia Anual Árbol de Vida 2026",
+      description: "Un encuentro transformador para conectar con tu propósito y fortalecer los lazos de nuestra comunidad. Únete a nosotros este 25 de julio.",
+      backgroundImage: "/images/hero/conferencia-anual.jpg",
+      ctaLink: "https://forms.gle/mockform1",
+      ctaLabel: "Inscribirse en la Conferencia"
+    }
+  }
+];
+
+const safeEvents = events.length > 0 ? events : [];
+const safeVideos = videos.length > 0 ? videos : [];
+const safeCepev = cepev || {
+  title: "CEPEV: Centro de Preparación para la Vida",
+  description: "El Centro de Preparación para la Vida (CEPEV) es un espacio dedicado al crecimiento integral de la persona. A través de seminarios, mentoría personalizada y talleres prácticos, te equipamos con herramientas emocionales, espirituales y éticas para afrontar con éxito los desafíos cotidianos.",
+  ctaLink: "https://forms.gle/mockformcepev",
+  ctaLabel: "Quiero ser parte de CEPEV",
+  rotations: [
+    {
+      type: "frase",
+      content: "La educación no es preparación para la vida; la educación es la vida misma en su máxima expresión de amor y servicio.",
+      author: "Instituto Árbol de Vida"
+    }
+  ]
+};
+
+const safePac = pac || {
+  title: "PAC: Programa de Acompañamiento Comunitario",
+  description: "El Programa de Acompañamiento Comunitario (PAC) ofrece soporte social, consejería pastoral y redes de apoyo vecinales.",
+  ctaLink: "https://forms.gle/mockformpac",
+  ctaLabel: "Solicitar Acompañamiento",
+  whatIsTitle: "¿Qué es PAC?",
+  whatIsContent: "Es una iniciativa de voluntariado y apoyo pastoral del IVPT.",
+  whereTitle: "¿Dónde estamos?",
+  whereContent: "Nuestras oficinas centrales están en el campus del Instituto.",
+  howTitle: "¿Cómo ser parte?",
+  howContent: "Puedes participar como beneficiario solicitando apoyo.",
+  gallery: ["/images/pac/slide-1.jpg", "/images/pac/slide-2.jpg", "/images/pac/slide-3.jpg"]
+};
+
+const safeFooter = footer || {
+  email: "contacto@institutoarboldevida.org",
+  phone: "+56 9 1234 5678",
+  address: "Av. Las Flores 450, Providencia, Santiago de Chile",
+  facebookUrl: "https://facebook.com/ivpt",
+  instagramUrl: "https://instagram.com/ivpt",
+  youtubeUrl: "https://youtube.com/ivpt"
+};
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/images/tree_logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <title>IVPT - Instituto Árbol de Vida</title>
+    <meta name="description" content="Sitio oficial del Instituto Árbol de Vida (IVPT). Conferencias, programas espirituales y de voluntariado." />
+  </head>
+  <body class="bg-neutral-light text-neutral-dark min-h-screen flex flex-col justify-between">
+    <Navbar />
+    <main class="flex-grow">
+      <Hero slides={safeSlides} />
+      <Events events={safeEvents} />
+      <Cepev cepev={safeCepev} />
+      <Pac pac={safePac} />
+      <Videos videos={safeVideos} />
+    </main>
+    <Footer footer={safeFooter} />
+  </body>
+</html>
