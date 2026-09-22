@@ -49,3 +49,12 @@ body {
 .hover-lift-rotate-alt:hover {
   transform: translateY(-8px) rotate(-1.3deg);
 }
+
+/* Hide scrollbars for horizontal touch carousels on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

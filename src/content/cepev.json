@@ -28,5 +28,15 @@
       "type": "grito",
       "content": "Ahora invoca!"
     }
+  ],
+  "gallery": [
+    "/images/cepev/cepev-bga-3.jpg",
+    "/images/cepev/cepev-bga-img-3115.jpg",
+    "/images/cepev/cepev-bga-4.jpg",
+    "/images/cepev/cepev-bga-5.jpg",
+    "/images/cepev/cepev-bga-img-3220.jpg",
+    "/images/cepev/cepev-bga-6.jpg",
+    "/images/cepev/cepev-bga-7.jpg",
+    "/images/cepev/cepev-bga-8.jpg"
   ]
 }

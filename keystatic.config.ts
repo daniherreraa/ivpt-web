@@ -89,6 +89,17 @@ export default config({
             itemLabel: (item) => `${item.fields.type.value}: ${item.fields.content.value?.substring(0, 30) || ''}...`,
           }
         ),
+        gallery: fields.array(
+          fields.image({
+            label: 'Foto del CEPEV',
+            directory: 'public/images/cepev',
+            publicPath: '/images/cepev',
+          }),
+          {
+            label: 'Galería de Fotos (CEPEV Bucaramanga)',
+            itemLabel: (item) => item.value || 'Foto sin seleccionar',
+          }
+        ),
       },
     }),
     pac: singleton({

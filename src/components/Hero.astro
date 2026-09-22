@@ -5,7 +5,7 @@ interface Props {
 }
 const { slides } = Astro.props;
 ---
-<section class="relative w-full h-[calc(100dvh-64px)] md:h-[calc(100dvh-80px)] overflow-hidden bg-brand-light flex items-center">
+<section class="relative w-full h-[85vh] min-h-[480px] md:h-[calc(100dvh-80px)] overflow-hidden bg-brand-light flex items-center">
   <!-- Background Slider -->
   <div class="absolute inset-0 z-0">
     {slides.map((slide, idx) => (
@@ -24,9 +24,9 @@ const { slides } = Astro.props;
   </div>
 
   <!-- Content Overlays -->
-  <div class="relative z-20 max-w-[1400px] w-full mx-auto px-6">
+  <div class="relative z-20 max-w-[1400px] w-full mx-auto px-4 sm:px-6">
     <!-- Asymmetric layout with variance:8. Floating card aligned straight -->
-    <div class="w-full max-w-xl bg-white/95 backdrop-blur-md p-8 md:p-10 rounded-2xl shadow-xl border border-brand-accent/50 translate-x-1 md:translate-x-12 transition-spring">
+    <div class="w-full max-w-xl bg-white/95 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-brand-accent/50 translate-x-0 md:translate-x-12 transition-spring">
       {slides.map((slide, idx) => (
         <div 
           class={`hero-content-block transition-all duration-500 ${idx === 0 ? 'block opacity-100' : 'hidden opacity-0'}`}
